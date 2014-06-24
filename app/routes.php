@@ -14,11 +14,18 @@ Route::group(array('before' => 'auth'), function()
 {
     // Esta será nuestra ruta de bienvenida.
     Route::get('/', 'PersonaController@index');
-    Route::get('/persona/get_ajax_personas', 'PersonaController@get_ajax_personas');
+    Route::get('/personas', ['as' => 'persona.admin', 'uses' => 'PersonaController@index']);
+    Route::get('/persona/get_ajax_personas/{trash?}', 'PersonaController@get_ajax_personas');
+    Route::get('/persona/delete/{id}', ['as' => 'persona.delete', 'uses' => 'PersonaController@delete']);
+    Route::get('/personas/{trash}', ['as' => 'persona.trash', 'uses' => 'PersonaController@index'])->where('trash', 'trash');
+    Route::get('/persona/get_ajax_personas_trash', 'PersonaController@get_ajax_personas_trash');
+    Route::get('/persona/restore/{id}', ['as' => 'persona.restore', 'uses' => 'PersonaController@restore']);
+
     // Esta ruta nos servirá para cerrar sesión.
     Route::get('logout', 'AuthController@logOut');
 
-    Route::resource('visita', 'VisitaController');
+    Route::get('/visita/create/{id_persona?}', ['as' => 'visita.create', 'uses' => 'VisitaController@create']);
+    Route::post('/visita/store', ['as' => 'visita.store', 'uses' => 'VisitaController@store']);
 
     Route::post('persona/ajax_store', 'PersonaController@ajaxStore');
     Route::post('publicador/ajax_store', 'PublicadorController@ajaxStore');
@@ -29,17 +36,5 @@ Route::group(array('before' => 'auth'), function()
     Route::get('persona/','PersonaController@index');
     
     Route::get('excel','ReportesController@excel');
-
-    Route::get('angular', function(){
-
-        return View::make('angular.angular');
-
-    });
-
-    Route::get('angular/getData', function(){
-
-        return Response::json(array('date' => date('r')));
-    
-    });
 
 });

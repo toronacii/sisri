@@ -18,8 +18,19 @@
 								<h4><small>SISRI</small></h4>
 							</a>
 						</li>
-						<li><a href="#"><span class="glyphicon glyphicon-user"></span>Personas</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-calendar"></span>Visitas</a></li>
+						<!--<li><a href="{{url('/personas')}}"><span class="glyphicon glyphicon-user"></span>Personas</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-calendar"></span>Visitas</a></li>-->
+						<li>
+							<a href="#" data-toggle="collapse" data-target="#menu-personas" data-parent="#menu-principal" class="collapsed">
+								<span class="glyphicon glyphicon-user"></span>Personas<span class="caret pull-right"></span>
+							</a>
+							<div class="collapse" id="menu-personas" style="height: 0px;">
+								<ul class="nav nav-list">
+									<li class="text-right"><a href="{{url('/personas')}}"><span class="glyphicon glyphicon-log-out"></span>Administrar</a></li>
+									<li class="text-right"><a href="{{url('/personas/trash')}}"><span class="glyphicon glyphicon-log-out"></span>Papelera</a></li>
+								</ul>
+							</div>
+						</li>
 						<li>
 							<a href="#" data-toggle="collapse" data-target="#menu-opciones" data-parent="#menu-principal" class="collapsed">
 								<span class="glyphicon glyphicon-cog"></span>Opciones<span class="caret pull-right"></span>

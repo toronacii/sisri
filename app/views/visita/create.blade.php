@@ -15,7 +15,7 @@
 
 @section('content')
 
-<div class="col-md-6 col-md-offset-3 well">
+<div class="col-md-12">
     
     @if (Session::has('message'))
         @foreach (Session::get('message') as $level => $messages)
@@ -30,7 +30,7 @@
 
     @endif
 
-    <h1>Crear visita</h1>
+    <h1>Nueva visita</h1>
 
     {{ Form::open(array('route' => 'visita.store')) }}
 
@@ -49,7 +49,8 @@
                     <select class="form-control selectpicker show-tick" id="personas_id" name="personas_id" data-live-search="true" data-size="5" data-container="body">
                         <option value="">Seleccione</option>
                         @foreach(Persona::all() as $persona)  
-                        <option value="{{ $persona->id }}" data-title="{{ $direccion = Direccion::getStringDireccion($persona->direcciones_id, ',<br>') }}" data-subtext="{{ $direccion }}" {{($persona->id == Input::old('personas_id')) ? 'selected' : ''}}>
+                            <?php $id_old_persona = (isset($id_persona)) ? $id_persona : Input::old('personas_id'); ?>
+                        <option value="{{ $persona->id }}" data-title="{{ $direccion = Direccion::getStringDireccion($persona->direcciones_id, ',<br>') }}" data-subtext="{{ $direccion }}" {{($persona->id == $id_old_persona) ? 'selected' : ''}}>
                             {{ (trim($name = $persona->nombre . " " . $persona->apellido)) ? $name : "(Sin nombre)" }}
                         </option>
                         @endforeach
@@ -203,7 +204,6 @@
             <fieldset class="form-group">
                 {{ Form::submit('Guardar', array('class' => 'btn btn-primary', 'name' => "guardar")) }}
                 {{ Form::submit('Guardar y agregar otra', array('class' => 'btn btn-primary', 'name' => "guardar-otro")) }}
-                {{ HTML::link('/visita', 'Ver visitas', array('class' => 'btn btn-success')) }}
             </fieldset>
         </div>
 

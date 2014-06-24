@@ -31,9 +31,9 @@ class VisitaController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create($id_persona = NULL)
 	{
-		return View::make('visita.create');
+		return View::make('visita.create')->with('id_persona', $id_persona);
 	}
 
 	/**
@@ -51,7 +51,7 @@ class VisitaController extends BaseController {
 		{
 			$messages['success'][] = 'Visita creada con exito.';
 			if (Input::has('guardar'))
-				return Redirect::route('visita.index');
+				return Redirect::route('persona.admin');
 			return Redirect::route('visita.create')->withMessage($messages);
 
 		}else

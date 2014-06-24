@@ -53,23 +53,23 @@ class PersonaController extends BaseController {
 		
 	}
 
-	public function index(){
+	public function index($trash = NULL)
+	{
 
 		$table = Datatable::table()
-	    ->addColumn('ID', 'Nombre', 'Direccion', 'Acciones')  
-	    ->setUrl(URL::to('/persona/get_ajax_personas'))
+	    ->addColumn('#', 'Nombre', 'Direccion', 'Acciones')  
+	    ->setUrl(URL::to('/persona/get_ajax_personas' . (($trash) ? "/true" : "")))
 	    ->noScript();
 
 		return View::make('persona.index')->with('datatable', $table);
 		return View::make('layout.menu');
 
-
-
 	}
 
-	public function get_ajax_personas()
+	public function get_ajax_personas($trash = FALSE)
 	{
-		return Datatable::collection(Persona::with('direccion')->get())
+		$personas = ($trash) ? Persona::onlyTrashed()->with('direccion')->get() : Persona::with('direccion')->get();
+		return Datatable::collection($personas)
 		->showColumns('id')
 		->addColumn('nombre', function($model)
 		{
@@ -80,17 +80,57 @@ class PersonaController extends BaseController {
 			$direccion = Direccion::getStringDireccion($model->direcciones_id);
 			return "<span title='$direccion'>" . substr($direccion, 0, 50) . "...</span>";
 		})
-		->addColumn('acciones', function($model)
+		->addColumn('acciones', function($model) use ($trash)
 		{
-			$html = '<button class="btn btn-primary btn-xs" title="Mostrar"><span class="glyphicon glyphicon-eye-open"></span></button>&nbsp;';
-			$html.= '<button class="btn btn-success btn-xs" title="Editar"><span class="glyphicon glyphicon-pencil"></span></button>&nbsp;';
-			$html.= '<button class="btn btn-danger btn-xs" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></button>';
-
+			if ($trash)
+			{
+				$html = '<a href="' . URL::to("persona/restore/{$model->id}") . '" class="btn btn-success btn-xs" title="Restaurar"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;';
+			}
+			else
+			{
+				$html = '<button class="btn btn-primary btn-xs" title="Mostrar"><span class="glyphicon glyphicon-eye-open"></span></button>&nbsp;';
+				$html.= '<button class="btn btn-success btn-xs" title="Editar"><span class="glyphicon glyphicon-pencil"></span></button>&nbsp;';
+				$html.= '<a href="' . URL::to("visita/create/{$model->id}") . '" class="btn btn-info btn-xs" title="Añadir visita"><span class="glyphicon glyphicon-calendar"></span></a>&nbsp;';
+				$html.= '<a href="' . URL::to("persona/delete/{$model->id}") . '" class="btn btn-danger btn-xs" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></button>';
+			}
+			
 			return $html;
 		})
 		->searchColumns('nombre', 'direccion')
 		->orderColumns('id', 'nombre', 'direccion', 'acciones')
 		->make();
+	}
+
+	public function delete($id)
+	{
+		$persona = Persona::find($id);
+
+		if ($persona == NULL)
+		{
+			return \App::abort(404);
+		}
+
+		$persona->delete();
+
+		Session::flash('mensaje', "Persona eliminada satisfactoriamente");
+
+		return Redirect::route('persona.admin');
+	}
+
+	public function restore($id)
+	{
+		$persona = Persona::onlyTrashed()->find($id);
+
+		if ($persona == NULL)
+		{
+			return \App::abort(404);
+		}
+
+		$persona->restore();
+
+		Session::flash('mensaje', "Persona restaurada con exito");
+
+		return Redirect::route('persona.admin');
 	}
 
 }

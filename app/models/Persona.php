@@ -1,8 +1,13 @@
 <?php
 
 use LaravelBook\Ardent\Ardent;
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class Persona extends Ardent{
+
+	protected $softDelete = true;
+
+	protected $dates = ['deleted_at'];
 
 	public $table = 'personas';
 
