@@ -3,7 +3,7 @@
 use LaravelBook\Ardent\Ardent;
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
-class Persona extends Ardent{
+class Persona extends Ardent {
 
 	protected $softDelete = true;
 
@@ -50,6 +50,20 @@ class Persona extends Ardent{
 
 	}
 
+	public function getTelefonos()
+	{
+		$telefono = "";
+		if ($this->telefonos)
+		{
+			foreach($this->telefonos as $tel)
+				$telefono = $tel->telefono . " / ";
+			
+			$telefono = substr($telefono,0,-3);
+		}
+
+		return $telefono;
+	}
+
 	public function getNombreCompleto()
 	{
 		$nombre = trim("$this->nombre $this->apellido");
@@ -69,5 +83,6 @@ class Persona extends Ardent{
 	public function visitas(){
 		return $this->HasMany('Visita', 'personas_id');
 	}
+
 
 }

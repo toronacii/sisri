@@ -107,7 +107,7 @@
     }  
 }
 
-.navbar span.glyphicon {
+.navbar span.glyphicon, .page-header span.glyphicon {
     margin-right: 15px
 }
 

@@ -14,6 +14,18 @@ class PersonaController extends BaseController {
 		$this->persona = $persona;
 	}
 
+	private function get_persona($id, $trash = FALSE)
+	{
+		$persona = ($trash) ? Persona::onlyTrashed()->find($id) : Persona::find($id);
+
+		if ($persona == NULL)
+		{
+			return \App::abort(404);
+		}
+
+		return $persona;
+	}
+
 	public function ajaxStore()
 	{
 		$persona = $this->persona;
@@ -88,8 +100,8 @@ class PersonaController extends BaseController {
 			}
 			else
 			{
-				$html = '<button class="btn btn-primary btn-xs" title="Mostrar"><span class="glyphicon glyphicon-eye-open"></span></button>&nbsp;';
-				$html.= '<button class="btn btn-success btn-xs" title="Editar"><span class="glyphicon glyphicon-pencil"></span></button>&nbsp;';
+				$html = '<a href="' . URL::to("persona/show/{$model->id}") . '" class="btn btn-primary btn-xs" title="Mostrar"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;';
+				$html.= '<a href="' . URL::to("persona/show/{$model->id}") . '" class="btn btn-success btn-xs" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;';
 				$html.= '<a href="' . URL::to("visita/create/{$model->id}") . '" class="btn btn-info btn-xs" title="Añadir visita"><span class="glyphicon glyphicon-calendar"></span></a>&nbsp;';
 				$html.= '<a href="' . URL::to("persona/delete/{$model->id}") . '" class="btn btn-danger btn-xs" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></button>';
 			}
@@ -103,12 +115,7 @@ class PersonaController extends BaseController {
 
 	public function delete($id)
 	{
-		$persona = Persona::find($id);
-
-		if ($persona == NULL)
-		{
-			return \App::abort(404);
-		}
+		$persona = $this->get_persona($id);
 
 		$persona->delete();
 
@@ -119,18 +126,31 @@ class PersonaController extends BaseController {
 
 	public function restore($id)
 	{
-		$persona = Persona::onlyTrashed()->find($id);
-
-		if ($persona == NULL)
-		{
-			return \App::abort(404);
-		}
+		$persona = $this->get_persona($id, TRUE);
 
 		$persona->restore();
 
 		Session::flash('mensaje', "Persona restaurada con exito");
 
 		return Redirect::route('persona.admin');
+	}
+
+	public function show($id)
+	{
+		$persona = Persona::with([
+			'direccion.zona',
+			'telefonos',
+			'visitas',
+			'visitas.publicador'
+		])->find($id);
+
+		if ($persona == NULL)
+		{
+			return \App::abort(404);
+		}
+
+		return View::make('persona.show')->with('persona', $persona);
+
 	}
 
 }

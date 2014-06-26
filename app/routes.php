@@ -20,6 +20,7 @@ Route::group(array('before' => 'auth'), function()
     Route::get('/personas/{trash}', ['as' => 'persona.trash', 'uses' => 'PersonaController@index'])->where('trash', 'trash');
     Route::get('/persona/get_ajax_personas_trash', 'PersonaController@get_ajax_personas_trash');
     Route::get('/persona/restore/{id}', ['as' => 'persona.restore', 'uses' => 'PersonaController@restore']);
+    Route::get('/persona/show/{id}', ['as' => 'persona.show', 'uses' => 'PersonaController@show']);
 
     // Esta ruta nos servirá para cerrar sesión.
     Route::get('logout', 'AuthController@logOut');

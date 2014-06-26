@@ -108,7 +108,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Barryvdh\DomPDF\ServiceProvider',
-		'Chumper\Datatable\DatatableServiceProvider'
+		'Chumper\Datatable\DatatableServiceProvider',
 
 	),
 
