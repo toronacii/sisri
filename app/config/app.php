@@ -177,7 +177,8 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 		#MY ALIASES
 		'PDF' 			  => 'Barryvdh\DomPDF\Facade',
-		'Datatable' 	  => 'Chumper\Datatable\Facades\DatatableFacade'
+		'Datatable' 	  => 'Chumper\Datatable\Facades\DatatableFacade',
+		'Carbon'		  => 'Carbon\Carbon'
 
 	),
 

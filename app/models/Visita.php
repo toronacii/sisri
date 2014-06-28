@@ -4,11 +4,12 @@ use LaravelBook\Ardent\Ardent;
 
 class Visita extends Ardent {
 
-	protected $guarded = array();
+	protected $fillable = array('condicion', 'personas_id', 'publicadores_id', 'fecha', 'tipo', 'hora', 'tema', 'publicacion', 'observacion');
 
 	public static $rules = array(
 		'personas_id' => 'required',
 		'tipo' => 'required',
+		'fecha' => 'required'
 	);
 
 	public static $customMessages = array(
@@ -69,15 +70,26 @@ class Visita extends Ardent {
 
 	public function beforeSave() 
 	{
-		if($this->isDirty('fecha')) {
-			$fecha = explode('/', $this->fecha);
-			$this->fecha = "$fecha[2]-$fecha[1]-$fecha[0]";
-		}
 
-		if($this->isDirty('publicadores_id') && empty($this->publicadores_id)) {
+		if ($this->isDirty('publicadores_id') && empty($this->publicadores_id)) {
 			unset($this->publicadores_id);
 		}
 
 		return true;
+	}
+
+	#ACCESSORS
+
+	public function getFechaAttribute($value)
+	{
+		return Carbon::createFromFormat('Y-m-d', $value)->format('d/m/Y');
+	}
+
+	#MUTATORS
+
+	public function setFechaAttribute($value)
+	{
+		if ($value)
+			$this->attributes['fecha'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
 	}
 }

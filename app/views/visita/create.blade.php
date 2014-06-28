@@ -51,7 +51,7 @@
                         @foreach(Persona::all() as $persona)  
                             <?php $id_old_persona = (isset($id_persona)) ? $id_persona : Input::old('personas_id'); ?>
                         <option value="{{ $persona->id }}" data-title="{{ $direccion = Direccion::getStringDireccion($persona->direcciones_id, ',<br>') }}" data-subtext="{{ $direccion }}" {{($persona->id == $id_old_persona) ? 'selected' : ''}}>
-                            {{ (trim($name = $persona->nombre . " " . $persona->apellido)) ? $name : "(Sin nombre)" }}
+                            #{{$persona->id}} {{ $persona->getNombreCompleto() }}
                         </option>
                         @endforeach
                     </select>
@@ -204,6 +204,7 @@
             <fieldset class="form-group">
                 {{ Form::submit('Guardar', array('class' => 'btn btn-primary', 'name' => "guardar")) }}
                 {{ Form::submit('Guardar y agregar otra', array('class' => 'btn btn-primary', 'name' => "guardar-otro")) }}
+                <a href="{{ URL::previous() }}" class="btn btn-default">Volver</a>
             </fieldset>
         </div>
 

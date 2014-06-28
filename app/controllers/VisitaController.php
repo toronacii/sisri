@@ -43,9 +43,9 @@ class VisitaController extends BaseController {
 	 */
 	public function store()
 	{
-		$this->visita->fill(Input::except('guardar', 'guardar-otro'));
+		$this->visita->fill(Input::all());
 
-		#var_dump(Input::all()); exit;
+		#dd($this->visita->attributes);
 
 		if ($this->visita->save())
 		{

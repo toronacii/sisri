@@ -31,6 +31,7 @@
 								</ul>
 							</div>
 						</li>
+						<li><a href="{{url('/visita/create')}}"><span class="glyphicon glyphicon-calendar"></span>Nueva visita</a></li>
 						<li>
 							<a href="#" data-toggle="collapse" data-target="#menu-opciones" data-parent="#menu-principal" class="collapsed">
 								<span class="glyphicon glyphicon-cog"></span>Opciones<span class="caret pull-right"></span>

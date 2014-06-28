@@ -84,5 +84,12 @@ class Persona extends Ardent {
 		return $this->HasMany('Visita', 'personas_id');
 	}
 
+	#ACCESSORS
+
+	public function getIdAttribute($value)
+	{
+		return $value;
+	}
+
 
 }

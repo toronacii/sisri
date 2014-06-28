@@ -108,7 +108,7 @@ class PersonaController extends BaseController {
 			
 			return $html;
 		})
-		->searchColumns('nombre', 'direccion')
+		->searchColumns('nombre', 'direccion', 'id')
 		->orderColumns('id', 'nombre', 'direccion', 'acciones')
 		->make();
 	}
@@ -135,21 +135,26 @@ class PersonaController extends BaseController {
 		return Redirect::route('persona.admin');
 	}
 
+	
 	public function show($id)
 	{
 		$persona = Persona::with([
 			'direccion.zona',
 			'telefonos',
-			'visitas',
+			'visitas' => function($query){
+				$query->orderBy('fecha', 'desc')->limit(5);
+			},
 			'visitas.publicador'
 		])->find($id);
+
+		#dd($persona->toArray());
 
 		if ($persona == NULL)
 		{
 			return \App::abort(404);
 		}
 
-		return View::make('persona.show')->with('persona', $persona);
+		return View::make('persona.show')->with('persona', $persona)->with('id_persona', $id);
 
 	}
 

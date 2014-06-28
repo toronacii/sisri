@@ -4,9 +4,31 @@ $.extend( true, $.fn.dataTable.defaults, {
 		"<'row'<'col-xs-6'l><'col-xs-6'f>r>"+
 		"t"+
 		"<'row'<'col-xs-6'i><'col-xs-6'p>>",
+
 	"oLanguage": {
-		"sLengthMenu": "_MENU_ records per page"
-	}
+        "sProcessing":     "<span class='processing'>Procesando...</span>",
+	    "sLengthMenu":     "Mostrar &nbsp; _MENU_ &nbsp; registros",
+	    "sZeroRecords":    "No se encontraron resultados",
+	    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+	    "sInfo":           "Registros del _START_ al _END_ de _TOTAL_ registros",
+	    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+	    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	    "sInfoPostFix":    "",
+	    "sSearch":         "Buscar: ",
+	    "sUrl":            "",
+	    "sInfoThousands":  ",",
+	    "sLoadingRecords": "Cargando...",
+	    "oPaginate": {
+	        "sFirst":    "Pri",
+	        "sLast":     "Últ",
+	        "sNext":     "Sig",
+	        "sPrevious": "Ant"
+	    },
+	    "oAria": {
+	        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+	        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+	    }
+    }
 } );
 
 

@@ -42,4 +42,9 @@ class Publicador extends Ardent{
 
 	}
 
+	public function getNombreCompleto()
+	{
+		return trim("$this->nombre $this->apellido");
+	}
+
 }
