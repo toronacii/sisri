@@ -64,4 +64,36 @@ class Direccion extends Ardent{
 	
 	}
 
+	public static function getStringDireccionSms($id, $sep = ", ")
+	{
+		$direccion = self::find($id);
+		$zona = Zona::find($direccion->zonas_id);
+		$dirString = "";
+
+		if ($direccion)
+		{
+			if ($zona)
+				$dirString .= "Zona:$zona->zona" . $sep; 
+			if ($direccion->calle_avenida)
+				$dirString .= "calle o avenida:$direccion->calle_avenida" . $sep; 
+			if ($direccion->cruce_con)
+				$dirString .= "cruce con:$direccion->cruce_con" . $sep; 
+			if ($direccion->casa_edificio)
+				$dirString .= "casa o edificio:$direccion->casa_edificio" . $sep; 
+			if ($direccion->piso)
+				$dirString .= "piso:$direccion->piso" . $sep; 
+			if ($direccion->apto)
+				$dirString .= "apartamento:$direccion->apto" . $sep; 
+			if ($direccion->local)
+				$dirString .= "local:$direccion->local" . $sep; 
+			if ($direccion->ref)
+				$dirString .= "referencia:$direccion->ref" . $sep; 
+
+			return substr($dirString, 0, -1 * strlen($sep));
+		}
+
+		return null;
+	
+	}
+
 }

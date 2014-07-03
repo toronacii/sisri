@@ -7,6 +7,8 @@ Route::group(array('before' => 'guest'), function()
 
 	// Validamos los datos de inicio de sesión.
 	Route::post('login', 'AuthController@postLogin');
+
+    Route::post('/api_sms/direccion/{id}', 'SmsController@getDireccion');
 });
 
 // Nos indica que las rutas que están dentro de él sólo serán mostradas si antes el usuario se ha autenticado.
@@ -17,7 +19,7 @@ Route::group(array('before' => 'auth'), function()
     Route::get('/personas', ['as' => 'persona.admin', 'uses' => 'PersonaController@index']);
     Route::get('/persona/get_ajax_personas/{trash?}', 'PersonaController@get_ajax_personas');
     Route::get('/persona/delete/{id}', ['as' => 'persona.delete', 'uses' => 'PersonaController@delete']);
-    Route::get('/personas/{trash}', ['as' => 'persona.trash', 'uses' => 'PersonaController@index'])->where('trash', 'trash');
+    Route::get('/personas/{trash}', ['as' => 'persona.trash', 'apluses' => 'PersonaController@index'])->where('trash', 'trash');
     Route::get('/persona/get_ajax_personas_trash', 'PersonaController@get_ajax_personas_trash');
     Route::get('/persona/restore/{id}', ['as' => 'persona.restore', 'uses' => 'PersonaController@restore']);
     Route::get('/persona/show/{id}', ['as' => 'persona.show', 'uses' => 'PersonaController@show']);

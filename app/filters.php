@@ -78,3 +78,12 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+/*
+Route::filter('autenticar', function(){
+
+	if (! Input::has('password') || Input::get('password') !== 'AuTeNtIcAr')
+			return Response::json(['resp' => 'Error al autenticar']);
+		
+});
+*/

@@ -64,11 +64,11 @@ class Persona extends Ardent {
 		return $telefono;
 	}
 
-	public function getNombreCompleto()
+	public function getNombreCompleto($default = "(sin nombre)")
 	{
 		$nombre = trim("$this->nombre $this->apellido");
 		if ($nombre == '')
-			return "(sin nombre)";
+			return $default;
 		return $nombre;
 	}
 
