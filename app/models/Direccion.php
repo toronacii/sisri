@@ -67,6 +67,7 @@ class Direccion extends Ardent{
 	public static function getStringDireccionSms($id, $sep = ", ")
 	{
 		$direccion = self::find($id);
+
 		$zona = Zona::find($direccion->zonas_id);
 		$dirString = "";
 

@@ -9,6 +9,7 @@ Route::group(array('before' => 'guest'), function()
 	Route::post('login', 'AuthController@postLogin');
 
     Route::post('/api_sms/direccion/{id}', 'SmsController@getDireccion');
+    
 });
 
 // Nos indica que las rutas que están dentro de él sólo serán mostradas si antes el usuario se ha autenticado.

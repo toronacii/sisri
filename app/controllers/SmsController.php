@@ -16,9 +16,8 @@ class SmsController extends BaseController {
 		if ($nombre)
 			$nombre = "Nombre: $nombre "; 
 
+		return Response::json(['resp' => $nombre . Direccion::getStringDireccionSms($persona->direcciones_id)]);
 
-
-		return Response::json(['resp' => $nombre . Direccion::getStringDireccionSms($id)]);
 	}
 
 }
