@@ -11,7 +11,7 @@
 
     <script>var base_url = '{{url('/')}}'</script>
     <!-- Bootstrap -->
-    {{HTML::style('css/bootstrap.css')}}
+    {{HTML::style('css/bootstrap.min.css')}}
     {{HTML::style('css/bootstrap-custom.css')}}
     {{HTML::script('js/jquery-1.11.0.min.js')}}
     {{HTML::script('js/bootstrap.min.js')}}

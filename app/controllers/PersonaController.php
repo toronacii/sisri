@@ -100,8 +100,7 @@ class PersonaController extends BaseController {
 			}
 			else
 			{
-				$html = '<a href="' . URL::to("persona/show/{$model->id}") . '" class="btn btn-primary btn-xs" title="Mostrar"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;';
-				$html.= '<a href="' . URL::to("persona/show/{$model->id}") . '" class="btn btn-success btn-xs" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;';
+				$html = '<a href="' . URL::to("persona/show/{$model->id}") . '" class="btn btn-primary btn-xs" title="Mostrar / Editar"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;';
 				$html.= '<a href="' . URL::to("visita/create/{$model->id}") . '" class="btn btn-info btn-xs" title="Añadir visita"><span class="glyphicon glyphicon-calendar"></span></a>&nbsp;';
 				$html.= '<a href="' . URL::to("persona/delete/{$model->id}") . '" class="btn btn-danger btn-xs" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></button>';
 			}
@@ -139,6 +138,7 @@ class PersonaController extends BaseController {
 	public function show($id)
 	{
 		$persona = Persona::with([
+			'direccion',
 			'direccion.zona',
 			'telefonos',
 			'visitas' => function($query){
@@ -155,6 +155,39 @@ class PersonaController extends BaseController {
 		}
 
 		return View::make('persona.show')->with('persona', $persona)->with('id_persona', $id);
+
+	}
+
+	public function update($id)
+	{
+		$persona = Persona::with('direccion')->findOrFail($id);
+
+		#dd($persona->toArray());
+		$direccion = $persona->direccion;
+
+		$persona->fill(Input::get('persona'));
+		$direccion->fill(Input::get('direccion'));
+		$resp = array();
+
+		#dd($persona, $direccion);
+
+		try
+		{
+
+			DB::transaction(function() use ($persona, $direccion)
+			{
+				$direccion->save();
+				$persona->save();
+
+			});
+
+			Return Redirect::to('/persona/show/' . $persona->id)->withMessage('Registro actualizado exitosamente');
+
+		}
+		catch (Exception $e)
+		{
+			Return Redirect::to('/persona/show/' . $persona->id)->withErrors('Error al insertar datos');
+		}
 
 	}
 

@@ -87,12 +87,7 @@ class VisitaController extends BaseController {
 	{
 		$visita = $this->visita->find($id);
 
-		if (is_null($visita))
-		{
-			return Redirect::route('visita.index');
-		}
-
-		return View::make('visita.edit', compact('visita'));
+		return View::make('visita.edit-partial', compact('visita'));
 	}
 
 	/**
@@ -103,21 +98,20 @@ class VisitaController extends BaseController {
 	 */
 	public function update($id)
 	{
-		$input = array_except(Input::all(), '_method');
-		$validation = Validator::make($input, Visita::$rules);
+		$visita = $this->visita->findOrFail($id);
 
-		if ($validation->passes())
+		$visita->fill(array_except(Input::all(), '_method'));
+
+		#dd(Input::all(), $visita->attributes);
+
+		if ($visita->save())
 		{
-			$visita = $this->visita->find($id);
-			$visita->update($input);
-
-			return Redirect::route('visita.show', $id);
+			return Redirect::route('persona.show', $visita->personas_id)->withMessage('Visiata modificada exitosamente');
 		}
+		return Redirect::route('persona.show', $visita->personas_id)
+			->withErrors(/*$validation*/"Error al modificar visita");
 
-		return Redirect::route('visita.edit', $id)
-			->withInput()
-			->withErrors($validation)
-			->with('message', 'There were validation errors.');
+		
 	}
 
 	/**

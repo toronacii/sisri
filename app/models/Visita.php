@@ -42,7 +42,7 @@ class Visita extends Ardent {
 		return $this->belongsTo('Publicador', 'publicadores_id');
 	}
 
-	public function getStringvisita($id = NULL)
+	public function getStringVisita($id = NULL)
 	{
 		$visita = ($id) ? self::find($id) : $this;
 		$visString = "";
@@ -68,6 +68,20 @@ class Visita extends Ardent {
 	
 	}
 
+	public static function getListTipos($first = "Seleccione"){
+
+		$tipos = self::$tipos;
+
+		$return = ($first) ? array('' => $first) : array();
+
+		foreach ($tipos as $idx => $tipo){
+			if ($idx)
+				$return[] = $tipo;
+		}
+		return $return;
+
+	}
+
 	public function beforeSave() 
 	{
 
@@ -91,5 +105,11 @@ class Visita extends Ardent {
 	{
 		if ($value)
 			$this->attributes['fecha'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+	}
+
+	public function setHoraAttribute($value)
+	{
+		if ($value)
+			$this->attributes['hora'] = $value;
 	}
 }

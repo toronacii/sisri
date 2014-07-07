@@ -23,12 +23,15 @@ Route::group(array('before' => 'auth'), function()
     Route::get('/persona/get_ajax_personas_trash', 'PersonaController@get_ajax_personas_trash');
     Route::get('/persona/restore/{id}', ['as' => 'persona.restore', 'uses' => 'PersonaController@restore']);
     Route::get('/persona/show/{id}', ['as' => 'persona.show', 'uses' => 'PersonaController@show']);
+    Route::post('/persona/update/{id}', ['as' => 'persona.update', 'uses' => 'PersonaController@update']);
 
     // Esta ruta nos servirá para cerrar sesión.
     Route::get('logout', 'AuthController@logOut');
 
     Route::get('/visita/create/{id_persona?}', ['as' => 'visita.create', 'uses' => 'VisitaController@create']);
     Route::post('/visita/store', ['as' => 'visita.store', 'uses' => 'VisitaController@store']);
+    Route::get('/visita/form-edit/{id}', ['as' => 'visita.form-edit', 'uses' => 'VisitaController@edit']);
+    Route::post('/visita/update/{id}', ['as' => 'visita.update', 'uses' => 'VisitaController@update']);
 
     Route::post('persona/ajax_store', 'PersonaController@ajaxStore');
     Route::post('publicador/ajax_store', 'PublicadorController@ajaxStore');
