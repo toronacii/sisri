@@ -9,7 +9,8 @@
 		"laravelbook/ardent": "dev-master",
 		"barryvdh/laravel-dompdf": "*",
 		"raveren/kint" : "dev-master",
-		"chumper/datatable": "dev-master"
+		"chumper/datatable": "dev-master",
+		"anlutro/curl": "*"
 	},
 	"autoload": {
 		"classmap": [

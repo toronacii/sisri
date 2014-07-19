@@ -109,6 +109,7 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Barryvdh\DomPDF\ServiceProvider',
 		'Chumper\Datatable\DatatableServiceProvider',
+		'anlutro\cURL\Laravel\cURLServiceProvider'
 
 	),
 
@@ -178,7 +179,8 @@ return array(
 		#MY ALIASES
 		'PDF' 			  => 'Barryvdh\DomPDF\Facade',
 		'Datatable' 	  => 'Chumper\Datatable\Facades\DatatableFacade',
-		'Carbon'		  => 'Carbon\Carbon'
+		'Carbon'		  => 'Carbon\Carbon',
+		'cURL'			  => 'anlutro\cURL\Laravel\cURL'
 
 	),
 

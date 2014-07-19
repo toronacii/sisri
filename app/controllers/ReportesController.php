@@ -15,16 +15,25 @@ class ReportesController extends BaseController {
 		->get();
 
 		#echo "<pre>";
-		dd($data['registros']->toJson());
+		echo($data['registros']->toJson());
 
 		#exit; 
-		$pdf = PDF::loadView('pdf.registros', $data);
+		#$pdf = PDF::loadView('pdf.registros', $data);
 
 		#var_dump($data);
 
 		#return View::make('pdf.registros', $data); 
 
-		return $pdf->stream();
+		#return $pdf->stream();
+	}
+
+	public function registros_remotos()
+	{
+		$response = cURL::get("http://sisri.com.ve/registros/pdf");
+
+		$data['registros'] = json_decode($response);
+
+		d($data);
 	}
 
 	public function persona($id){

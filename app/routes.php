@@ -9,6 +9,8 @@ Route::group(array('before' => 'guest'), function()
 	Route::post('login', 'AuthController@postLogin');
 
     Route::get('/api_sms/direccion/{id}', 'SmsController@getDireccion');
+
+    Route::get('registros/pdf','ReportesController@registros');
     
 });
 
@@ -37,7 +39,7 @@ Route::group(array('before' => 'auth'), function()
     Route::post('persona/ajax_store', 'PersonaController@ajaxStore');
     Route::post('publicador/ajax_store', 'PublicadorController@ajaxStore');
 
-    Route::get('registros/pdf','ReportesController@registros');
+    Route::get('registros/remote_pdf','ReportesController@registros_remotos');
 
     Route::get('persona/pdf/{id}','ReportesController@persona');
     Route::get('persona/','PersonaController@index');
