@@ -11,11 +11,12 @@ class ReportesController extends BaseController {
 			'visitas.publicador'
 		))->join('direcciones', 'personas.direcciones_id', '=','direcciones.id')
 		->orderBy('direcciones.calle_avenida', 'DESC')
-		->whereIn('personas.id', array(390,391,158,159,171/*,160,161,162,163,164,220,227,228,144,145,146,149,150,151,152,153,154,155,156,157,208,209,210,211,212,213,214,140,142,143,176,177,178,179,180,181,182,221,222,223,224,225,226*/))
+		->where(DB::raw("UPPER(direcciones.calle_avenida) REGEXP '.*[bermudez|independencia|miquilen].*'"))
 		->get();
 
-		#echo "<pre>";print_r($data['registros']->toArray()); exit;
+		#d($data['registros']->toArray());
 
+		#exit; 
 		$pdf = PDF::loadView('pdf.registros', $data);
 
 		#var_dump($data);

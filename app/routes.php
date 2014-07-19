@@ -8,7 +8,7 @@ Route::group(array('before' => 'guest'), function()
 	// Validamos los datos de inicio de sesión.
 	Route::post('login', 'AuthController@postLogin');
 
-    Route::post('/api_sms/direccion/{id}', 'SmsController@getDireccion');
+    Route::get('/api_sms/direccion/{id}', 'SmsController@getDireccion');
     
 });
 
