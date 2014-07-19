@@ -11,7 +11,7 @@ class ReportesController extends BaseController {
 			'visitas.publicador'
 		))->join('direcciones', 'personas.direcciones_id', '=','direcciones.id')
 		->orderBy('direcciones.calle_avenida', 'DESC')
-		->where(DB::raw("UPPER(direcciones.calle_avenida) REGEXP '.*[bermudez|independencia|miquilen].*'"))
+		->where(DB::raw("UPPER(direcciones.calle_avenida) REGEXP '.*(bermudez|miquilen|independencia).*'"))
 		->get();
 
 		#d($data['registros']->toArray());
