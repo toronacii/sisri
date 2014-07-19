@@ -14,8 +14,8 @@ class ReportesController extends BaseController {
 		->where(DB::raw("UPPER(direcciones.calle_avenida) REGEXP '.*(bermudez|miquilen|independencia).*'"))
 		->get();
 
-		echo "<pre>";
-		dd($data['registros']->toArray());
+		#echo "<pre>";
+		dd($data['registros']->toJson());
 
 		#exit; 
 		$pdf = PDF::loadView('pdf.registros', $data);
