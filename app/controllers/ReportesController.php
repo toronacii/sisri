@@ -14,6 +14,17 @@ class ReportesController extends BaseController {
 		->where(DB::raw("UPPER(direcciones.calle_avenida) REGEXP '.*(bermudez|miquilen|independencia).*'"))
 		->get();
 
+		foreach ($data['registros'] as $i => $registro)
+		{
+			if ($registro->visitas)
+			{
+				foreach ($registro->visitas as $j => $visita)
+				{	
+					@$data['registros'][$i]->visitas[$j]->stringVisita = $visita->getStringvisita();
+				}
+			}
+		}
+
 		#echo "<pre>";
 		echo($data['registros']->toJson());
 
@@ -33,7 +44,11 @@ class ReportesController extends BaseController {
 
 		$data['registros'] = json_decode($response);
 
-		d($data);
+		#var_dump($data['registros']); exit;
+
+		$pdf = PDF::loadView('pdf.registros', $data);
+
+		return $pdf->stream();
 	}
 
 	public function persona($id){

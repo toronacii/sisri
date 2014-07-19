@@ -22,7 +22,7 @@
 		</tr>
 		<tr>
 			<td colspan="2"><label>Género: </label>{{$registro->genero}}</td>
-			<td><label>Edad: </label>{{$registro->edad}}</td>
+			<td><label>Edad: </label>{{--$registro->edad--}}</td>
 		</tr>
 		<tr>
 			<td colspan="2"><label>Dirección:</label>
